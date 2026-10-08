@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.pyc
+# never commit keys or raw participant data
+*.env
+keys.env
+data/

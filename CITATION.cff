@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use or adapt the analysis receipt, please cite it as below."
+title: "Analysis receipt"
+abstract: "A one-page record that travels with any qualitative or AI-assisted analysis: what it read, what it left over, whether the leftovers were checked, and what each claim rests on."
+type: software
+authors:
+  - family-names: Mitts
+    given-names: Sasha
+version: 1.0.0
+date-released: 2026-10-09
+license:
+  - CC-BY-4.0
+  - MIT
+keywords:
+  - qualitative research
+  - AI-assisted analysis
+  - research methods
+  - reporting
+  - omissions

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Analysis receipt</title>
+<style>
+  @page { size: Letter; margin: 0.45in 0.55in; }
+  :root { --ink:#1f2937; --muted:#6b7280; --teal:#0d7a6e; --rule:#cfccc2; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.3; margin: 0; }
+  header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 5pt; margin-bottom: 7pt; }
+  h1 { font-family: Georgia, serif; font-weight: 400; font-size: 21pt; margin: 0; }
+  .meta { font-size: 8.5pt; color: var(--muted); text-align: right; }
+  .fields { display:grid; grid-template-columns: 1fr 1fr; gap: 3pt 18pt; margin-bottom: 7pt; }
+  .field { border-bottom: 1px solid var(--rule); padding: 2pt 0 7pt; font-size: 8.5pt; color: var(--muted); }
+  section { border-top: 2px dashed var(--rule); padding: 5pt 0 3pt; display:grid; grid-template-columns: 82pt 1fr; gap: 10pt; }
+  .part { font-weight: 700; letter-spacing: 1.5pt; text-transform: uppercase; color: var(--teal); font-size: 9pt; padding-top: 2pt; }
+  .owner { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); font-size: 7.5pt; display:block; margin-top: 2pt; }
+  .line { margin-bottom: 4pt; }
+  .label { font-weight: 700; font-size: 9pt; }
+  .hint { color: var(--muted); font-size: 7.8pt; }
+  .box { border: 1px solid var(--rule); border-radius: 3pt; margin-top: 2pt; }
+  .h1x { height: 19pt; } .h2x { height: 28pt; } .h3x { height: 46pt; }
+  table { width: 100%; border-collapse: collapse; margin-top: 2pt; font-size: 7.6pt; }
+  th { text-align:left; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--rule); padding: 1pt 3pt; }
+  td { border-bottom: 1px solid var(--rule); height: 13pt; padding: 1pt 3pt; }
+  footer { margin-top: 5pt; border-top: 2px solid var(--ink); padding-top: 4pt; display:flex; justify-content:space-between; font-size: 7.6pt; color: var(--muted); }
+  .sign { display:grid; grid-template-columns: repeat(4, 1fr); gap: 10pt; margin-top: 4pt; }
+  .sign div { border-bottom: 1px solid var(--rule); padding-bottom: 12pt; font-size: 7.6pt; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Analysis receipt</h1>
+  <div class="meta">Fill in while you work. Blank reads as "not checked".<br>If a line does not apply, write "Not applicable" and why.</div>
+</header>
+
+<div class="fields">
+  <div class="field">Study or project</div>
+  <div class="field">Analysis owner</div>
+  <div class="field">Dates of the analysis</div>
+  <div class="field">Receipt version</div>
+</div>
+
+<section>
+  <div class="part">Question<span class="owner">Whoever set the question</span></div>
+  <div>
+    <div class="line"><span class="label">Question and frame.</span> <span class="hint">Word for word as given to every reader. Lens used. What the frame leaves out by design.</span><div class="box h2x"></div></div>
+    <div class="line"><span class="label">What it means for the decision.</span> <span class="hint">Ship / ship with a stated limit / read more / no decision rests on it.</span><div class="box h1x"></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="part">Readers<span class="owner">Whoever ran the reading</span></div>
+  <div>
+    <div class="line"><span class="label">What was collected.</span> <span class="hint">Count, kind, source, how selected.</span><div class="box h1x"></div></div>
+    <div class="line"><span class="label">What was read, and by which readers.</span> <span class="hint">People, models and tools. Note sampling, truncation, chunking, retrieval, cut-offs. If a tool cannot show what it read, say so.</span>
+      <table><tr><th style="width:12%">Reader</th><th style="width:26%">Person, model or tool (version, date)</th><th style="width:18%">Given</th><th style="width:22%">Actually read</th><th>Brief</th></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table></div>
+    <div class="line"><span class="label">What was never read, and why.</span> <span class="hint">Counts and reasons.</span><div class="box h1x"></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="part">Leftovers<span class="owner">Whoever checks what was set aside</span></div>
+  <div>
+    <div class="line"><span class="label">What counts as a leftover.</span> <span class="hint">The unit (turn, response, note) and the rule (for example, no finding quotes it).</span><div class="box h1x"></div></div>
+    <div class="line"><span class="label">What was sampled, and what it found.</span> <span class="hint">The one line that produces new evidence. Zero new in 60 random leftovers: probably under 5%. It bounds common misses, not rare ones.</span>
+      <table><tr><th>Total leftovers</th><th>Sampled</th><th>Seed</th><th>Read by</th><th>Existing</th><th>New</th><th>Nothing</th><th>Upper bound (95%)</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div>
+    <div class="line"><span class="label">Targeted searches for rare or misfitting material.</span> <span class="hint">Briefs or rankings used, and what they found.</span><div class="box h1x"></div></div>
+    <div class="line"><span class="label">What was not checked.</span> <span class="hint">Named plainly.</span><div class="box h1x"></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="part">Claims<span class="owner">Whoever reports the findings</span></div>
+  <div>
+    <div class="line"><span class="label">What each claim rests on.</span> <span class="hint">Support counted from the records, and of how many. Cases against, and what reading them showed.</span>
+      <table><tr><th style="width:40%">Claim</th><th>Support (n of N)</th><th>Cases against</th><th>What they showed</th></tr>
+      <tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table></div>
+    <div class="line"><span class="label">Claims that did not hold.</span> <span class="hint">Proposed by any reader, checked, dropped or narrowed, and why.</span><div class="box h1x"></div></div>
+  </div>
+</section>
+
+<footer>
+  <span>Not a certificate. A record of what the analysis rests on, and what it did not look at.</span>
+  <span>Analysis receipt v1.0 · CC BY 4.0 · Sasha Mitts</span>
+</footer>
+<div class="sign"><div>Question signed</div><div>Readers signed</div><div>Leftovers signed</div><div>Claims signed</div></div>
+</body>
+</html>
