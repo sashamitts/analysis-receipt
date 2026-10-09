@@ -37,6 +37,8 @@ A demonstration for a talk. No product or policy decision rests on it.
 
 Output cap 32,000 tokens per call. No call hit it. Exact prompts, model IDs and settings are in the run log.
 
+How the material reached each model. Each call received all 12 interviews in one prompt, in the same order every time. Nothing was chunked or retrieved. This suits patterns across people. It may cost detail within each person, and any effect of the order was the same in every call. Temperature was not set, so each provider's default applied.
+
 ### 2.3 What was never read, and why
 Nothing in the 12 interviews was skipped. The other 988 interviews were not drawn.
 
@@ -59,7 +61,7 @@ Unit is a participant turn. A turn is a leftover if no AI finding quotes it. 45 
 Reader C's four briefs. The "where the question does not fit" brief found one participant whose admin work was not theirs to hand over. The human reading had already noted it.
 
 ### 3.4 What was not checked
-The 988 interviews not drawn. One human reference reader and no second adjudicator. Claude proposed the matches between AI findings and the reference ideas; Sasha checked 20 of them at random, and all 20 held.
+The 988 interviews not drawn. One human reference reader and no second adjudicator. Reading one interview per call, or shuffling the order between calls, was not tested. Claude proposed the matches between AI findings and the reference ideas; Sasha checked 20 of them at random, and all 20 held.
 
 ---
 

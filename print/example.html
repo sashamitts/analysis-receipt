@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Analysis receipt, filled example</title>
+<style>
+  @page { size: Letter; margin: 0.5in 0.6in; }
+  :root { --ink:#1f2937; --body:#374151; --muted:#5b6370; --teal:#0d7a6e; --rule:#d9d7ce; --red:#b4432f; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: "Helvetica Neue", Arial, sans-serif; color: var(--body); font-size: 9.8pt; line-height: 1.36; }
+  h1 { font-family: Georgia, serif; font-weight: 400; font-size: 22pt; color: var(--ink); margin: 0; }
+  .top { display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 6pt; margin-bottom: 8pt; }
+  .meta { font-size: 8.5pt; color: var(--muted); text-align: right; }
+  .intro { font-size: 10pt; margin: 0 0 8pt; }
+  .row { display:grid; grid-template-columns: 74pt 1fr 1fr; gap: 12pt; padding: 8pt 0; border-top: 2px dashed var(--rule); }
+  .row.head { border-top: 0; padding: 0 0 4pt; }
+  .p { font-weight: 700; letter-spacing: 1.5pt; text-transform: uppercase; color: var(--teal); font-size: 8.8pt; padding-top: 1pt; }
+  .c { font-weight: 700; letter-spacing: 1.5pt; text-transform: uppercase; font-size: 8pt; }
+  .rest { color: var(--ink); } .open { color: var(--red); }
+  ul { margin: 0; padding-left: 12pt; }
+  li { margin-bottom: 2.5pt; }
+  .sign { border-top: 2px dashed var(--rule); padding-top: 8pt; display:grid; grid-template-columns: repeat(4,1fr); gap: 10pt; font-size: 8.5pt; color: var(--muted); }
+  .foot { margin-top: 10pt; border-top: 2px solid var(--ink); padding-top: 5pt; display:flex; justify-content:space-between; font-size: 8pt; color: var(--muted); }
+</style></head>
+<body>
+  <div class="top">
+    <h1>Analysis receipt, filled example</h1>
+    <div class="meta">Learners East 2026 demonstration<br>Owner Sasha Mitts · v1 · 1 to 8 October 2026</div>
+  </div>
+  <p class="intro">Twelve interviews from the public Anthropic Interviewer dataset, read by a person and by four AI setups, for the talk "Finding What AI Analysis Misses". It is small on purpose. Read it as an example of the method, not as a finding about AI tools in general.</p>
+
+  <div class="row head"><span></span><span class="c rest">What it rests on</span><span class="c open">What it leaves open</span></div>
+
+  <div class="row">
+    <div class="p">Question</div>
+    <ul>
+      <li>"How do these professionals decide what to hand to AI, what to keep for themselves, and when to check its work?"</li>
+      <li>Given word for word to every reader</li>
+    </ul>
+    <ul>
+      <li>No framework applied</li>
+      <li>Anything beyond handing work over, keeping it or checking it, although several people talked about their jobs more widely</li>
+      <li>A demonstration. No decision rests on it.</li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="p">Readers</div>
+    <ul>
+      <li>12 interviews drawn at random from 1,000. 16,963 words, 138 participant answers.</li>
+      <li>R. My own reading, blind, before seeing any AI output</li>
+      <li>A. One AI model, one pass. A×4. The same model and prompt, four passes.</li>
+      <li>B. Three AI providers. C. Four separate targeted searches.</li>
+      <li>Model names, settings and prompts are in the run log</li>
+    </ul>
+    <ul>
+      <li>The other 988 interviews</li>
+      <li>Each AI call read all 12 interviews at once, in the same order. That suits patterns across people and may cost detail within each person. Reading one interview at a time was not tested.</li>
+      <li>Temperature was left at each provider's default</li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="p">Leftovers</div>
+    <ul>
+      <li>A leftover is an answer no AI finding quotes. 45 of 138.</li>
+      <li>20 read at random by me. 8 fit existing ideas, 0 held a new idea, 12 held nothing relevant.</li>
+      <li>3 of the 8 were the worry about being displaced, which no AI reader found</li>
+      <li>The "where the question does not fit" search found 1 person, already in my reading</li>
+    </ul>
+    <ul>
+      <li>Up to about 14% of leftovers may still hold a new idea (95%)</li>
+      <li>25 leftovers unread</li>
+      <li>One human reference reader, and no second</li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="p">Claims</div>
+    <ul>
+      <li>One AI pass found 19 of the 34 ideas in my reading (56%). All AI readers together found 27 (79%).</li>
+      <li>Every idea held by five or more people was found. All 7 misses were held by four or fewer.</li>
+      <li>All 526 AI quotes were found word for word in the transcripts, checked by code</li>
+    </ul>
+    <ul>
+      <li>3 ideas only the AI proposed. 2 held partly. 1 was already in my reading.</li>
+      <li>Claude matched AI findings to my ideas. I checked 20 at random, and all 20 held.</li>
+    </ul>
+  </div>
+
+  <div class="sign">
+    <div>Question · Sasha Mitts</div><div>Readers · Sasha Mitts</div><div>Leftovers · Sasha Mitts</div><div>Claims · Sasha Mitts</div>
+  </div>
+
+  <div class="foot">
+    <span>Full version with every line: github.com/sashamitts/analysis-receipt, examples folder</span>
+    <span>CC BY 4.0 · Sasha Mitts</span>
+  </div>
+</body></html>

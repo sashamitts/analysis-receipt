@@ -4,6 +4,18 @@ A one-page record that travels with any qualitative or AI-assisted analysis. It 
 
 > Every AI analysis makes compromises. Document yours.
 
+## Start here, no code needed
+
+| | |
+|---|---|
+| **[Read the guide (web page)](https://sashamitts.github.io/analysis-receipt/)** | What the receipt is, how to fill it in, and a filled example. The easiest place to start. |
+| **[Make your own copy (Google Doc)](https://docs.google.com/document/d/1lnpzzmbP78J6_D8i5rWgcrJrw0qvGXN5vC1y7F1eo0I/copy)** | The blank receipt, ready to fill in. Download it as Word from Google Docs if you prefer. |
+| **[Download the printable PDF](print/analysis-receipt.pdf)** | A one-page quick guide, the blank receipt, and a filled example. |
+
+The rest of this repository holds the same receipt in plain text, add-on sections for other study designs, detailed guides, a leftover sampler script and a Claude skill.
+
+## Why
+
 AI tools now summarise interviews, cluster survey responses and draft findings in minutes. Their output often looks complete and checks out line by line. What it leaves out is invisible in the output itself. A tool may have read a sample, cut long documents, or dropped what few people said. The people reading the report cannot see any of that. People leave things out too, and the same record helps there.
 
 The receipt makes those choices visible. It does not certify an analysis. It shows what the analysis rests on, and what it did not look at.
@@ -18,7 +30,8 @@ The receipt makes those choices visible. It does not certify an analysis. It sho
 | [`tools/`](tools/) | `leftover_sample.py`, which finds the passages no finding used, draws a random sample for a person to read, and computes the bound |
 | [`prompts/`](prompts/) | Reader briefs for targeted searches with AI or people |
 | [`skill/`](skill/) | A Claude skill that helps you adapt, fill in and review a receipt |
-| [`print/`](print/) | A printable one-page version |
+| [`print/`](print/) | The printable PDF (quick guide, blank receipt, filled example) and its source pages |
+| [`docs/`](docs/) | The web page at sashamitts.github.io/analysis-receipt |
 
 ## Start here
 

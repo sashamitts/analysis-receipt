@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis receipt</title>
+<meta name="description" content="A one-page record that travels with any qualitative analysis, by people or by AI. It shows what the analysis read, what it set aside, whether anyone checked, and what each finding rests on.">
+<meta property="og:title" content="Analysis receipt">
+<meta property="og:description" content="Every AI analysis makes compromises. Document yours.">
+<style>
+  :root {
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --sand: #f0eee5;
+    --line: #d9d7ce;
+    --ink: #1f2937;
+    --body: #374151;
+    --muted: #5b6370;
+    --teal: #0d7a6e;
+    --teal-dark: #0a5f56;
+    --teal-tint: #e6f2f0;
+    --red: #b4432f;
+    --red-tint: #f5e4e0;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --wrap: 1040px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--body); font-family: var(--sans); font-size: 19px; line-height: 1.6; }
+  a { color: var(--teal-dark); text-underline-offset: 3px; }
+  a:hover { color: var(--teal); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 10; }
+  .skip:focus { left: 16px; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); line-height: 1.2; }
+  h2 { font-size: 36px; margin: 0 0 12px; }
+  h3 { font-size: 24px; margin: 0 0 8px; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 22px; color: var(--body); max-width: 760px; }
+  .kicker { font-size: 14px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin: 0 0 10px; }
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  section:first-of-type { border-top: 0; }
+
+  /* Top bar */
+  .bar { background: var(--ink); color: #e9ebee; }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+  .brand { font-family: var(--serif); font-size: 20px; color: #fff; text-decoration: none; }
+  .bar nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 16px; }
+  .bar nav a { color: #d7dbe0; text-decoration: none; }
+  .bar nav a:hover { color: #fff; text-decoration: underline; }
+
+  /* Hero */
+  .hero { background: var(--ink); color: #e9ebee; padding: 56px 0 72px; }
+  .hero h1 { color: #fff; font-size: 64px; font-style: italic; margin: 0 0 18px; }
+  .hero .lead { color: #d7dbe0; }
+  .hero .tag { font-family: var(--serif); font-size: 26px; color: #8fd3c7; margin: 0 0 22px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 14px; margin: 28px 0 18px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 10px; font-weight: 700; font-size: 18px; text-decoration: none; border: 2px solid transparent; }
+  .btn.primary { background: #5db8a9; color: #10231f; }
+  .btn.primary:hover { background: #7cc9bc; color: #10231f; }
+  .btn.ghost { border-color: #8a929d; color: #fff; }
+  .btn.ghost:hover { border-color: #fff; color: #fff; }
+  .small { font-size: 16px; color: var(--muted); }
+  .hero .small { color: #aeb5be; }
+
+  /* Cards */
+  .grid { display: grid; gap: 20px; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+  .card.sand { background: var(--sand); border-color: transparent; }
+  .card h3 { font-size: 23px; }
+  .card p:last-child { margin-bottom: 0; }
+  .part .num { font-family: var(--serif); font-size: 44px; color: var(--teal); line-height: 1; margin-bottom: 8px; }
+  .part.red .num { color: var(--red); }
+  .owner { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 16px; color: var(--muted); }
+
+  /* Steps */
+  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 24px 0 0; }
+  ol.steps > li { counter-increment: step; position: relative; padding: 0 0 32px 76px; }
+  ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: -2px; width: 52px; height: 52px; border-radius: 50%; background: var(--teal); color: #fff; font-family: var(--serif); font-size: 26px; display: flex; align-items: center; justify-content: center; }
+  ol.steps > li::after { content: ""; position: absolute; left: 25px; top: 56px; bottom: 6px; width: 2px; background: var(--line); }
+  ol.steps > li:last-child::after { display: none; }
+  ol.steps h3 { margin-top: 6px; }
+  .key { background: var(--teal-tint); border-radius: 12px; padding: 20px 22px; margin-top: 14px; }
+  .key ol { margin: 6px 0 0; padding-left: 22px; }
+  .key li { margin-bottom: 6px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 17px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .bound { max-width: 560px; margin-top: 14px; background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+  .bound td:last-child, .bound th:last-child { text-align: right; }
+
+  /* Weak / strong */
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--card); margin-bottom: 18px; }
+  .pair > div { padding: 20px 22px; }
+  .pair .weak { background: var(--red-tint); }
+  .pair .label { font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .pair .weak .label { color: var(--red); }
+  .pair .strong .label { color: var(--teal); }
+  .pair .line { grid-column: 1 / -1; background: var(--sand); padding: 12px 22px; font-weight: 700; color: var(--ink); }
+
+  /* Example receipt */
+  .receipt { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 26px 30px 10px; }
+  .receipt .head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-bottom: 12px; font-size: 15px; color: var(--muted); }
+  .receipt .head b { letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+  .rrow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 18px 0; border-top: 2px dashed var(--line); }
+  .rrow.cols { border-top: 0; padding: 0 0 8px; }
+  .rrow .p { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); font-size: 15px; padding-top: 3px; }
+  .rrow .c { font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+  .rrow .c.rest { color: var(--ink); }
+  .rrow .c.open { color: var(--red); }
+  .rrow ul { margin: 0; padding-left: 18px; font-size: 17px; }
+  .rrow li { margin-bottom: 4px; }
+
+  /* Limits & glossary */
+  .limits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px; margin-top: 20px; }
+  .limits div { padding-left: 16px; border-left: 4px solid var(--teal); }
+  .limits b { display: block; color: var(--ink); }
+  dl.terms { display: grid; grid-template-columns: 200px 1fr; gap: 12px 24px; margin: 20px 0 0; }
+  dl.terms dt { font-weight: 700; color: var(--ink); }
+  dl.terms dd { margin: 0; }
+
+  /* Downloads */
+  .dl .card { display: flex; flex-direction: column; }
+  .dl .card .go { margin-top: auto; padding-top: 14px; font-weight: 700; }
+  .dl .icon { width: 40px; height: 40px; margin-bottom: 12px; }
+
+  footer { background: var(--ink); color: #c9ced5; padding: 40px 0; font-size: 16px; }
+  footer a { color: #8fd3c7; }
+
+  @media (max-width: 900px) {
+    .g4 { grid-template-columns: repeat(2, 1fr); }
+    .g3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    body { font-size: 18px; }
+    .hero h1 { font-size: 46px; }
+    h2 { font-size: 30px; }
+    .g4, .g2, .limits { grid-template-columns: 1fr; }
+    .pair { grid-template-columns: 1fr; }
+    .rrow { grid-template-columns: 1fr; gap: 8px; }
+    .rrow.cols { display: none; }
+    .rrow .rest-list::before { content: "Rests on"; display: block; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink); margin: 4px 0; }
+    .rrow .open-list::before { content: "Leaves open"; display: block; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin: 4px 0; }
+    dl.terms { grid-template-columns: 1fr; gap: 4px; }
+    dl.terms dd { margin-bottom: 12px; }
+    ol.steps > li { padding-left: 64px; }
+    .bar nav { display: none; }
+  }
+  @media print {
+    .bar, .buttons, .skip { display: none; }
+    .hero { background: none; color: var(--ink); padding: 0 0 20px; }
+    .hero h1, .hero .lead, .hero .tag { color: var(--ink); }
+    section { padding: 24px 0; break-inside: avoid-page; }
+    footer { background: none; color: var(--muted); }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<div class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">Analysis receipt</a>
+    <nav aria-label="Sections">
+      <a href="#why">Why</a>
+      <a href="#parts">The four parts</a>
+      <a href="#how">How to use it</a>
+      <a href="#example">Example</a>
+      <a href="#get">Get it</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1>Analysis receipt</h1>
+    <p class="tag">Every AI analysis makes compromises. Document yours.</p>
+    <p class="lead">A one-page record that travels with any qualitative analysis, done by people, by AI, or both. It shows what the analysis read, what it set aside, whether anyone checked, and what each finding rests on.</p>
+    <div class="buttons">
+      <a class="btn primary" href="https://docs.google.com/document/d/1lnpzzmbP78J6_D8i5rWgcrJrw0qvGXN5vC1y7F1eo0I/copy">Make your own copy (Google Doc)</a>
+      <a class="btn ghost" href="analysis-receipt.pdf">Download the printable PDF</a>
+      <a class="btn ghost" href="#example">See a filled example</a>
+    </div>
+    <p class="small">Free to use and adapt. No sign-up and no code needed. Takes about 15 minutes to set up for a study.</p>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="why">
+  <div class="wrap">
+    <p class="kicker">Why a receipt</p>
+    <h2>What an analysis leaves out is invisible in the analysis.</h2>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card sand">
+        <h3>AI output looks complete</h3>
+        <p>AI tools now summarise interviews, cluster survey responses and draft findings in minutes. The output often checks out line by line.</p>
+      </div>
+      <div class="card sand">
+        <h3>The gaps do not show</h3>
+        <p>A tool may read a sample, cut long files, or drop what only a few people said. Nothing in the output tells you this happened.</p>
+      </div>
+      <div class="card sand">
+        <h3>The receipt makes them visible</h3>
+        <p>It does not certify the work. It records what the analysis rests on, and what it did not look at, so others can judge it.</p>
+      </div>
+    </div>
+    <p style="margin-top:22px">People leave things out too. The receipt works for any analysis, with or without AI.</p>
+  </div>
+</section>
+
+<section id="parts">
+  <div class="wrap">
+    <p class="kicker">The four parts</p>
+    <h2>Four parts, each with someone who answers for it.</h2>
+    <p class="lead">Keep these four, even if you rename the lines under them. One person can own all four. In a team, each owner signs their part.</p>
+    <div class="grid g4" style="margin-top:24px">
+      <div class="card part">
+        <div class="num">1</div>
+        <h3>Question</h3>
+        <p>What was asked, and what decision it serves.</p>
+        <div class="owner">Owner: whoever set the question</div>
+      </div>
+      <div class="card part">
+        <div class="num">2</div>
+        <h3>Readers</h3>
+        <p>What was read, by whom or by what, and what was never read.</p>
+        <div class="owner">Owner: whoever ran the reading</div>
+      </div>
+      <div class="card part">
+        <div class="num">3</div>
+        <h3>Leftovers</h3>
+        <p>What was set aside, and whether anyone checked it.</p>
+        <div class="owner">Owner: whoever checks the leftovers</div>
+      </div>
+      <div class="card part">
+        <div class="num">4</div>
+        <h3>Claims</h3>
+        <p>What each finding rests on, and the cases against it.</p>
+        <div class="owner">Owner: whoever reports the findings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="kicker">How to use it</p>
+    <h2>Five steps.</h2>
+    <ol class="steps">
+      <li>
+        <h3>Make a copy before you start</h3>
+        <p>Use the <a href="https://docs.google.com/document/d/1lnpzzmbP78J6_D8i5rWgcrJrw0qvGXN5vC1y7F1eo0I/copy">Google Doc template</a> or print the <a href="analysis-receipt.pdf">PDF</a>. Keep it next to your analysis files. Write your research question in, word for word, before any reading starts.</p>
+      </li>
+      <li>
+        <h3>Fill it in while you work</h3>
+        <p>A record made afterwards is a memory, and memories leave things out too. Note each reader as you use it, including any AI tool, its version and the date. Write counts, names and reasons, not adjectives. A blank line reads as "not checked". If a line does not apply, write "Not applicable" and one reason.</p>
+      </li>
+      <li>
+        <h3>Check the leftovers</h3>
+        <p>This is the one step that adds new evidence. A <b>leftover</b> is a passage that no finding used, such as an interview answer that no theme quotes.</p>
+        <div class="key">
+          <b>How to do it</b>
+          <ol>
+            <li>List the passages that no finding used.</li>
+            <li>Pick some at random. Shuffle them, or use a random number generator.</li>
+            <li>Read each one and sort it. It fits an existing finding, it holds a new idea, or it holds nothing relevant.</li>
+            <li>If you find a new idea, add it to the findings and say so on the receipt. That is the check working.</li>
+          </ol>
+        </div>
+        <p style="margin-top:16px">If your sample holds nothing new, it tells you roughly how much could still be missing.</p>
+        <table class="bound">
+          <thead><tr><th scope="col">Leftovers you read, with nothing new</th><th scope="col">Share that may still hold a new idea</th></tr></thead>
+          <tbody>
+            <tr><td>20</td><td>up to about 14%</td></tr>
+            <tr><td>30</td><td>up to about 10%</td></tr>
+            <tr><td>60</td><td>up to about 5%</td></tr>
+            <tr><td>100</td><td>up to about 3%</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:10px">At 95% confidence. Pick the size you can live with for the decision at hand. A design exploration may accept 15%. A policy recommendation may need 5% or less.</p>
+      </li>
+      <li>
+        <h3>Look for the rare views</h3>
+        <p>A random sample tells you about common misses. It rarely finds what only one or two people said. If rare views matter for the decision, run at least one targeted search. For example, ask a second reader, a person or an AI, to find the people your question does not fit. Or rank the leftovers by how poorly your codes fit them and read the top of the list.</p>
+      </li>
+      <li>
+        <h3>Attach it to what you share</h3>
+        <p>Put a short version on the last page of the report or the last slide of the readout, and link the full receipt. Each owner signs their part.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="good">
+  <div class="wrap">
+    <p class="kicker">Writing good entries</p>
+    <h2>Counts and reasons, not adjectives.</h2>
+    <p class="lead">These examples are invented to show the difference.</p>
+    <div style="margin-top:22px">
+      <div class="pair">
+        <div class="line">What was read, and by which readers</div>
+        <div class="weak"><div class="label">Weak</div>"Analysed with AI."</div>
+        <div class="strong"><div class="label">Strong</div>"The researcher read all 24 transcripts. The repository's summary feature was given all 24 on 3 March. It does not show what it read, and it cuts transcripts over its length limit. 4 of the 24 were over it."</div>
+      </div>
+      <div class="pair">
+        <div class="line">What was sampled, and what it found</div>
+        <div class="weak"><div class="label">Weak</div>"Spot-checked the transcripts."</div>
+        <div class="strong"><div class="label">Strong</div>"60 of 507 leftovers, chosen at random and read by the researcher. 9 fit existing findings, 0 held a new idea, 51 held nothing relevant. Up to about 5% may still hold a new idea."</div>
+      </div>
+      <div class="pair">
+        <div class="line">What each claim rests on</div>
+        <div class="weak"><div class="label">Weak</div>"Most users want X."</div>
+        <div class="strong"><div class="label">Strong</div>"Admins avoid bulk import after one bad experience. 9 of 24 participants, counted from coded answers. 2 used it again after a failure. Both had a colleague who restored their data. Reported as a condition."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="example">
+  <div class="wrap">
+    <p class="kicker">A filled example</p>
+    <h2>The receipt from our demonstration.</h2>
+    <p class="lead">Twelve interviews from a public dataset, read by me and by four AI setups, for the talk "Finding What AI Analysis Misses". It is small on purpose, so read it as an example of the method, not as a finding.</p>
+    <div class="receipt" style="margin-top:24px" role="region" aria-label="Filled example receipt">
+      <div class="head"><b>Analysis receipt</b><span>Learners East 2026 demonstration · Owner Sasha Mitts</span></div>
+      <div class="rrow cols" aria-hidden="true"><span></span><span class="c rest">What it rests on</span><span class="c open">What it leaves open</span></div>
+      <div class="rrow">
+        <div class="p">Question</div>
+        <ul class="rest-list">
+          <li>"How do these professionals decide what to hand to AI, what to keep for themselves, and when to check its work?"</li>
+          <li>The same wording for every reader</li>
+        </ul>
+        <ul class="open-list">
+          <li>No framework applied</li>
+          <li>Anything beyond handing over, keeping or checking</li>
+          <li>No decision rests on it</li>
+        </ul>
+      </div>
+      <div class="rrow">
+        <div class="p">Readers</div>
+        <ul class="rest-list">
+          <li>12 interviews drawn at random from 1,000 (138 answers)</li>
+          <li>My own reading, done blind before seeing any AI output</li>
+          <li>One AI model run once, the same model run four times, three AI providers, and four targeted searches</li>
+        </ul>
+        <ul class="open-list">
+          <li>The other 988 interviews</li>
+          <li>One human reader, no second</li>
+          <li>Each AI call read all 12 interviews at once. That suits patterns across people and may cost detail within each person. Reading one interview at a time was not tested.</li>
+        </ul>
+      </div>
+      <div class="rrow">
+        <div class="p">Leftovers</div>
+        <ul class="rest-list">
+          <li>45 of 138 answers were quoted by no AI finding</li>
+          <li>20 of them read at random. 8 fit existing ideas, 0 were new.</li>
+          <li>A targeted search for people the question does not fit found 1, already in my reading</li>
+        </ul>
+        <ul class="open-list">
+          <li>Up to about 14% of leftovers may still hold a new idea</li>
+          <li>25 leftovers unread</li>
+        </ul>
+      </div>
+      <div class="rrow">
+        <div class="p">Claims</div>
+        <ul class="rest-list">
+          <li>One AI pass found 56% of the 34 ideas in my reading. All AI readers together found 79%.</li>
+          <li>All 7 ideas no AI found were held by four people or fewer</li>
+          <li>All 526 AI quotes were word for word</li>
+        </ul>
+        <ul class="open-list">
+          <li>3 ideas only the AI proposed. 2 held partly, 1 was already in my reading.</li>
+          <li>Claude matched AI findings to my ideas. I checked 20 at random, and all held.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">The full version, with every line filled in, is on <a href="https://github.com/sashamitts/analysis-receipt/blob/main/examples/learners-2026-demo.md">GitHub</a>.</p>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="kicker">Limits</p>
+    <h2>What the receipt can and cannot do.</h2>
+    <div class="limits">
+      <div><b>It is not a certificate.</b>A filled receipt does not mean the analysis is good. It means someone can see what it rests on. Weak work with an honest receipt is easier to judge than strong-looking work without one.</div>
+      <div><b>A random sample finds common misses, not rare ones.</b>An idea one or two people voiced will usually fall outside a random sample. That is what the targeted search is for.</div>
+      <div><b>No reading is ground truth.</b>Any comparison needs a reference reading, and that reader misses things too. Check disagreements against the records before counting them either way.</div>
+      <div><b>Agreement is not coverage.</b>Two readers can agree closely and still miss the same things. Agreement only measures what was put in front of them.</div>
+      <div><b>Write it during the work.</b>Accounts written afterwards leave things out, whether a person or an AI writes them.</div>
+      <div><b>Checklists can become ritual.</b>The leftover check and the claim checks keep the receipt honest, because each one adds new evidence. Without them the rest is description.</div>
+    </div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap">
+    <p class="kicker">Words used here</p>
+    <h2>A short glossary.</h2>
+    <dl class="terms">
+      <dt>Reader</dt><dd>Anything that turned material into findings. A person coding, an AI model summarising, a tool, or a step that decides what a model sees.</dd>
+      <dt>Passage</dt><dd>The smallest unit that can carry one idea. Usually one interview answer, one survey response, one observation or one field note.</dd>
+      <dt>Leftover</dt><dd>A passage that no finding used. For example, an interview answer that no theme quotes.</dd>
+      <dt>Targeted search</dt><dd>A second look aimed at what a random sample misses, such as people the question does not fit, or passages the codes fit badly.</dd>
+      <dt>Upper bound</dt><dd>The most that could still be missing, given what your sample found. "Up to 5%" means the true share is probably lower.</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="get" class="dl">
+  <div class="wrap">
+    <p class="kicker">Get the receipt</p>
+    <h2>Pick the format that suits you.</h2>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card">
+        <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="3" width="26" height="34" rx="3" fill="#e6f2f0" stroke="#0d7a6e" stroke-width="2"/><path d="M13 13h14M13 19h14M13 25h9" stroke="#0d7a6e" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3>Google Doc template</h3>
+        <p>Make your own copy and fill it in. You can also download your copy as a Word file from Google Docs.</p>
+        <a class="go" href="https://docs.google.com/document/d/1lnpzzmbP78J6_D8i5rWgcrJrw0qvGXN5vC1y7F1eo0I/copy">Make a copy</a>
+      </div>
+      <div class="card">
+        <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="3" width="26" height="34" rx="3" fill="#f5e4e0" stroke="#b4432f" stroke-width="2"/><path d="M20 12v14M14 20l6 6 6-6" stroke="#b4432f" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Printable PDF</h3>
+        <p>A one-page quick guide and the blank receipt, ready to print and fill in by hand.</p>
+        <a class="go" href="analysis-receipt.pdf">Download the PDF</a>
+      </div>
+      <div class="card">
+        <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="#f0eee5" stroke="#1f2937" stroke-width="2"/><path d="M14 16l-4 4 4 4M26 16l4 4-4 4M22 13l-4 14" stroke="#1f2937" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>The full kit</h3>
+        <p>Plain-text templates, add-on sections for other kinds of studies, and detailed guides.</p>
+        <a class="go" href="https://github.com/sashamitts/analysis-receipt">Open on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="further">
+  <div class="wrap">
+    <p class="kicker">Going further</p>
+    <h2>For teams and tool builders.</h2>
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card sand">
+        <h3>Fit it to your study</h3>
+        <p>Five decisions that adapt the receipt to interviews, surveys, usability sessions or field notes. <a href="https://github.com/sashamitts/analysis-receipt/blob/main/guide/ADAPTING.md">Adapting guide</a> and <a href="https://github.com/sashamitts/analysis-receipt/blob/main/receipt/modules.md">optional add-on sections</a>.</p>
+      </div>
+      <div class="card sand">
+        <h3>A Claude skill</h3>
+        <p>Helps you adapt, fill in and review a receipt without inventing numbers. <a href="https://github.com/sashamitts/analysis-receipt/raw/main/skill/analysis-receipt.zip">Download the skill</a> and add it in Claude's settings.</p>
+      </div>
+      <div class="card sand">
+        <h3>Leftover sampler</h3>
+        <p>A small Python script that finds the passages no finding used, draws the random sample, and works out the bound. <a href="https://github.com/sashamitts/analysis-receipt/blob/main/tools/leftover_sample.py">See the script</a>.</p>
+      </div>
+      <div class="card sand">
+        <h3>Briefs for targeted searches</h3>
+        <p>Starting instructions for a second reader, person or AI, that looks for what a random sample misses. <a href="https://github.com/sashamitts/analysis-receipt/blob/main/prompts/reader-briefs.md">Reader briefs</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Made by Sasha Mitts and introduced in the talk "Finding What AI Analysis Misses" at Learners East 2026.</p>
+    <p>Template, guides and examples are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Reuse and adapt them with credit. Code is MIT licensed. Cite as Mitts, S. (2026). <i>Analysis receipt</i>. <a href="https://github.com/sashamitts/analysis-receipt">github.com/sashamitts/analysis-receipt</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Analysis receipt, quick guide</title>
+<style>
+  @page { size: Letter; margin: 0.4in 0.6in; }
+  :root { --ink:#1f2937; --body:#374151; --muted:#5b6370; --teal:#0d7a6e; --tint:#e6f2f0; --sand:#f0eee5; --rule:#d9d7ce; --red:#b4432f; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: "Helvetica Neue", Arial, sans-serif; color: var(--body); font-size: 9.6pt; line-height: 1.32; }
+  h1 { font-family: Georgia, serif; font-weight: 400; font-size: 26pt; color: var(--ink); margin: 0; }
+  h2 { font-family: Georgia, serif; font-weight: 400; font-size: 14pt; color: var(--ink); margin: 0 0 6pt; }
+  .top { display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 6pt; margin-bottom: 10pt; }
+  .top .tag { font-family: Georgia, serif; font-size: 12pt; color: var(--teal); }
+  .lead { font-size: 10.2pt; margin: 0 0 8pt; }
+  .parts { display:grid; grid-template-columns: repeat(4,1fr); gap: 8pt; margin-bottom: 10pt; }
+  .part { background: var(--sand); border-radius: 6pt; padding: 8pt 9pt; }
+  .part .n { font-family: Georgia, serif; font-size: 18pt; color: var(--teal); line-height: 1; }
+  .part b { display:block; color: var(--ink); font-size: 11pt; margin: 3pt 0 2pt; }
+  .part .o { font-size: 8pt; color: var(--muted); margin-top: 4pt; }
+  ol.steps { list-style:none; counter-reset: s; padding:0; margin: 0 0 10pt; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 5pt 28pt; }
+  ol.steps > li::before { content: counter(s); position:absolute; left:0; top:0; width:19pt; height:19pt; border-radius:50%; background: var(--teal); color:#fff; font-family: Georgia, serif; font-size: 10.5pt; display:flex; align-items:center; justify-content:center; }
+  ol.steps b { color: var(--ink); }
+  .cols { display:grid; grid-template-columns: 1.15fr 1fr; gap: 14pt; }
+  .box { background: var(--tint); border-radius: 6pt; padding: 9pt 11pt; }
+  .box ol { margin: 3pt 0 0; padding-left: 15pt; }
+  table { border-collapse: collapse; width: 100%; margin-top: 6pt; font-size: 9.5pt; }
+  th, td { text-align:left; padding: 3pt 5pt; border-bottom: 1px solid #b9cfcb; }
+  th { font-size: 7.8pt; letter-spacing: 1pt; text-transform: uppercase; color: var(--muted); }
+  dl { margin: 0; display:grid; grid-template-columns: 78pt 1fr; gap: 3pt 8pt; font-size: 9.3pt; }
+  dt { font-weight: 700; color: var(--ink); }
+  dd { margin: 0; }
+  .limits { margin-top: 6pt; border-top: 1px solid var(--rule); padding-top: 8pt; font-size: 9.3pt; }
+  .limits p { margin: 0 0 3pt; }
+  .foot { margin-top: 6pt; border-top: 2px solid var(--ink); padding-top: 5pt; display:flex; justify-content:space-between; font-size: 8pt; color: var(--muted); }
+  .small { font-size: 8.5pt; color: var(--muted); }
+</style></head>
+<body>
+  <div class="top">
+    <h1>Analysis receipt</h1>
+    <div class="tag">Every AI analysis makes compromises. Document yours.</div>
+  </div>
+  <p class="lead">A one-page record that travels with any qualitative analysis, done by people, by AI, or both. It shows what the analysis read, what it set aside, whether anyone checked, and what each finding rests on. It does not certify the work. It lets others judge it.</p>
+
+  <h2>Four parts, each with an owner</h2>
+  <div class="parts">
+    <div class="part"><div class="n">1</div><b>Question</b>What was asked, and what decision it serves.<div class="o">Whoever set the question</div></div>
+    <div class="part"><div class="n">2</div><b>Readers</b>What was read, by whom or by what, and what was never read.<div class="o">Whoever ran the reading</div></div>
+    <div class="part"><div class="n">3</div><b>Leftovers</b>What was set aside, and whether anyone checked it.<div class="o">Whoever checks the leftovers</div></div>
+    <div class="part"><div class="n">4</div><b>Claims</b>What each finding rests on, and the cases against it.<div class="o">Whoever reports the findings</div></div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h2>Five steps</h2>
+      <ol class="steps">
+        <li><b>Make a copy before you start.</b> Write the research question in, word for word, before any reading begins.</li>
+        <li><b>Fill it in while you work.</b> A record made afterwards is a memory. Note each reader as you use it, including any AI tool, its version and the date. Write counts and reasons, not adjectives. Blank reads as "not checked".</li>
+        <li><b>Check the leftovers.</b> The one step that adds new evidence. See the box.</li>
+        <li><b>Look for the rare views.</b> A random sample rarely finds what one or two people said. Ask a second reader, a person or an AI, to find the people the question does not fit. Or read the passages your codes fit worst.</li>
+        <li><b>Attach it to what you share.</b> Put a short version on the last page or slide, and link the full receipt. Each owner signs their part.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="box">
+        <h2 style="margin-bottom:2pt">Checking the leftovers</h2>
+        A <b>leftover</b> is a passage no finding used, such as an interview answer no theme quotes.
+        <ol>
+          <li>List the passages no finding used.</li>
+          <li>Pick some at random.</li>
+          <li>Read each one. Does it fit an existing finding, hold a new idea, or hold nothing relevant?</li>
+          <li>Add any new idea to the findings, and say so on the receipt.</li>
+        </ol>
+        <table>
+          <tr><th>Read, nothing new</th><th>May still hold a new idea</th></tr>
+          <tr><td>20 leftovers</td><td>up to about 14%</td></tr>
+          <tr><td>30 leftovers</td><td>up to about 10%</td></tr>
+          <tr><td>60 leftovers</td><td>up to about 5%</td></tr>
+          <tr><td>100 leftovers</td><td>up to about 3%</td></tr>
+        </table>
+        <p class="small" style="margin:5pt 0 0">At 95% confidence. Pick the size the decision can live with.</p>
+      </div>
+      <h2 style="margin-top:10pt">Words used here</h2>
+      <dl>
+        <dt>Reader</dt><dd>Anything that turned material into findings. A person, an AI model, a tool, or a pipeline step.</dd>
+        <dt>Passage</dt><dd>The smallest unit that carries one idea, such as one interview answer or one survey response.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="limits">
+    <p><b>Remember.</b> A receipt is not a certificate. A random sample finds common misses, not rare ones. No reading is ground truth, including yours. Agreement between readers is not coverage. The leftover check and the claim checks are what keep it from becoming a ritual.</p>
+  </div>
+
+  <div class="foot">
+    <span>Template on the next page. Filled example on page 3.</span>
+    <span>sashamitts.github.io/analysis-receipt · CC BY 4.0 · Sasha Mitts</span>
+  </div>
+</body></html>
